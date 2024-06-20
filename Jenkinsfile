@@ -1,5 +1,4 @@
-
-   //START-OF-SCRIPT
+//START-OF-SCRIPT
 node {
     def SPLUNK_HOSTNAME='splunk'
     def DOCKER_HOME = tool name: 'docker-latest'
@@ -9,6 +8,10 @@ node {
 
     stage('Clone') {        
         git url: REPO_URL
+    }
+
+    stage('Check Gradle Tasks') {
+        sh "${GRADLE_HOME}/bin/gradle tasks"
     }
 
     stage('Build') {
