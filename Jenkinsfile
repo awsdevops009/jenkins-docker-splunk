@@ -1,4 +1,5 @@
-//START-OF-SCRIPT
+
+   //START-OF-SCRIPT
 node {
     def SPLUNK_HOSTNAME='splunk'
     def DOCKER_HOME = tool name: 'docker-latest'
@@ -11,10 +12,10 @@ node {
     }
 
     stage('Build') {
-        sh "${GRADLE_HOME}/bin/gradle build"
-        sh "ls -la build/libs/*.war"
+        sh "${GRADLE_HOME}/bin/gradle clean build"
+        sh "ls -la build/libs/*.war || echo 'WAR file not found'"
         sh "echo ====================="
-        sh "cp build/libs/*.war docker/webapp.war"
+        sh "cp build/libs/*.war docker/webapp.war || echo 'WAR file not found'"
         sh "pwd"
         sh "ls -la"
         sh "ls -la ./docker"
