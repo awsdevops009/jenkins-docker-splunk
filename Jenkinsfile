@@ -1,13 +1,16 @@
-//START-OF-SCRIPT
 node {
-    def SPLUNK_HOSTNAME='splunk'
-    def DOCKER_HOME = tool name: 'docker-latest'
     def GRADLE_HOME = tool name: 'gradle-4.10.2', type: 'hudson.plugins.gradle.GradleInstallation'
     def REPO_URL = 'https://github.com/awsdevops009/jenkins-docker-splunk.git'
     def DOCKERHUB_REPO = 'dashpradeep/webapp'
 
     stage('Clone') {        
         git url: REPO_URL
+    }
+
+    stage('Verify Gradle Files') {
+        sh 'ls -la'
+        sh 'test -f build.gradle || { echo "build.gradle not found"; exit 1; }'
+        sh 'test -f settings.gradle || { echo "settings.gradle not found"; exit 1; }'
     }
 
     stage('Check Gradle Tasks') {
@@ -47,4 +50,3 @@ node {
     }
     */
 }
-//END-OF-SCRIPT
